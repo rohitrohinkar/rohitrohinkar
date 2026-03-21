@@ -1,0 +1,853 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Strategic Consulting Brain | Rohit Rohinkarr</title>
+<meta name="description" content="Growth Architecture for SaaS. 9-step diagnostic methodology by Rohit Rohinkarr — Product, Growth & Revenue Strategy Consultant.">
+<meta name="author" content="Rohit Rohinkarr">
+<meta property="og:title" content="Strategic Consulting Brain | Rohit Rohinkarr">
+<meta property="og:description" content="Growth Architecture for SaaS. 9-step diagnostic methodology for early-stage and growth-stage SaaS companies.">
+<meta property="og:type" content="website">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&family=Nunito:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg-deep: #0B0F1A;
+    --bg-card: #111827;
+    --bg-card-hover: #1A2234;
+    --bg-accent: #0D3B2E;
+    --green-primary: #10B981;
+    --green-light: #34D399;
+    --green-glow: rgba(16, 185, 129, 0.15);
+    --green-subtle: rgba(16, 185, 129, 0.08);
+    --amber: #F59E0B;
+    --amber-glow: rgba(245, 158, 11, 0.12);
+    --blue: #3B82F6;
+    --blue-glow: rgba(59, 130, 246, 0.12);
+    --red-soft: #EF4444;
+    --text-primary: #F1F5F9;
+    --text-secondary: #94A3B8;
+    --text-muted: #64748B;
+    --border: rgba(148, 163, 184, 0.1);
+    --border-accent: rgba(16, 185, 129, 0.25);
+    --font-display: 'Libre Baskerville', Georgia, serif;
+    --font-body: 'Nunito', system-ui, sans-serif;
+    --radius: 12px;
+    --radius-lg: 20px;
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: var(--font-body);
+    background: var(--bg-deep);
+    color: var(--text-primary);
+    line-height: 1.6;
+    overflow-x: hidden;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  /* ─── Noise texture overlay ─── */
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.03'/%3E%3C/svg%3E");
+    pointer-events: none;
+    z-index: 9999;
+  }
+
+  /* ─── Ambient glow ─── */
+  .glow-orb {
+    position: fixed;
+    border-radius: 50%;
+    filter: blur(120px);
+    pointer-events: none;
+    z-index: 0;
+  }
+  .glow-orb.g1 { width: 500px; height: 500px; background: rgba(16, 185, 129, 0.06); top: -100px; right: -100px; }
+  .glow-orb.g2 { width: 400px; height: 400px; background: rgba(59, 130, 246, 0.04); bottom: 20%; left: -80px; }
+  .glow-orb.g3 { width: 350px; height: 350px; background: rgba(245, 158, 11, 0.03); bottom: -50px; right: 20%; }
+
+  /* ─── Nav ─── */
+  nav {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 100;
+    backdrop-filter: blur(20px) saturate(1.4);
+    -webkit-backdrop-filter: blur(20px) saturate(1.4);
+    background: rgba(11, 15, 26, 0.8);
+    border-bottom: 1px solid var(--border);
+    transition: all 0.3s;
+  }
+  .nav-inner {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 2rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    height: 64px;
+  }
+  .nav-logo {
+    font-family: var(--font-display);
+    font-size: 15px;
+    font-weight: 700;
+    color: var(--green-primary);
+    letter-spacing: -0.02em;
+    text-decoration: none;
+  }
+  .nav-logo span { color: var(--text-muted); font-weight: 400; }
+  .nav-links { display: flex; gap: 2rem; align-items: center; }
+  .nav-links a {
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--text-secondary);
+    text-decoration: none;
+    letter-spacing: 0.02em;
+    transition: color 0.2s;
+  }
+  .nav-links a:hover { color: var(--green-light); }
+  .nav-cta {
+    font-size: 12px !important;
+    font-weight: 700 !important;
+    color: var(--bg-deep) !important;
+    background: var(--green-primary);
+    padding: 8px 20px;
+    border-radius: 8px;
+    transition: all 0.2s !important;
+  }
+  .nav-cta:hover { background: var(--green-light) !important; transform: translateY(-1px); }
+
+  .hamburger { display: none; background: none; border: none; cursor: pointer; padding: 4px; }
+  .hamburger span { display: block; width: 22px; height: 2px; background: var(--text-secondary); margin: 5px 0; transition: 0.3s; border-radius: 2px; }
+
+  /* ─── Hero ─── */
+  .hero {
+    position: relative;
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    padding: 8rem 2rem 4rem;
+    z-index: 1;
+  }
+  .hero-content { max-width: 800px; }
+  .hero-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background: var(--green-subtle);
+    border: 1px solid var(--border-accent);
+    border-radius: 100px;
+    padding: 6px 18px;
+    font-size: 12px;
+    font-weight: 700;
+    color: var(--green-primary);
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    margin-bottom: 2rem;
+    animation: fadeInUp 0.8s ease both;
+  }
+  .hero-badge .pulse {
+    width: 8px; height: 8px;
+    background: var(--green-primary);
+    border-radius: 50%;
+    animation: pulse 2s infinite;
+  }
+  @keyframes pulse {
+    0%, 100% { box-shadow: 0 0 0 0 rgba(16,185,129,0.4); }
+    50% { box-shadow: 0 0 0 8px rgba(16,185,129,0); }
+  }
+
+  h1 {
+    font-family: var(--font-display);
+    font-size: clamp(2.4rem, 5vw, 3.6rem);
+    font-weight: 700;
+    line-height: 1.15;
+    color: var(--text-primary);
+    margin-bottom: 1.5rem;
+    animation: fadeInUp 0.8s 0.1s ease both;
+  }
+  h1 em {
+    font-style: italic;
+    color: var(--green-primary);
+    position: relative;
+  }
+  h1 em::after {
+    content: '';
+    position: absolute;
+    bottom: 2px;
+    left: 0;
+    right: 0;
+    height: 3px;
+    background: linear-gradient(90deg, var(--green-primary), transparent);
+    border-radius: 2px;
+  }
+
+  .hero-sub {
+    font-size: 1.15rem;
+    color: var(--text-secondary);
+    max-width: 600px;
+    margin: 0 auto 2.5rem;
+    line-height: 1.7;
+    animation: fadeInUp 0.8s 0.2s ease both;
+  }
+
+  .hero-ctas {
+    display: flex;
+    gap: 1rem;
+    justify-content: center;
+    flex-wrap: wrap;
+    animation: fadeInUp 0.8s 0.3s ease both;
+  }
+  .btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 14px 32px;
+    border-radius: 10px;
+    font-family: var(--font-body);
+    font-size: 14px;
+    font-weight: 700;
+    text-decoration: none;
+    transition: all 0.25s;
+    cursor: pointer;
+    border: none;
+  }
+  .btn-primary {
+    background: var(--green-primary);
+    color: var(--bg-deep);
+    box-shadow: 0 0 30px rgba(16,185,129,0.2);
+  }
+  .btn-primary:hover { background: var(--green-light); transform: translateY(-2px); box-shadow: 0 8px 40px rgba(16,185,129,0.3); }
+  .btn-outline {
+    background: transparent;
+    color: var(--text-primary);
+    border: 1px solid var(--border);
+  }
+  .btn-outline:hover { border-color: var(--green-primary); color: var(--green-primary); }
+
+  .hero-stats {
+    display: flex;
+    justify-content: center;
+    gap: 3rem;
+    margin-top: 4rem;
+    animation: fadeInUp 0.8s 0.4s ease both;
+  }
+  .stat { text-align: center; }
+  .stat-num {
+    font-family: var(--font-display);
+    font-size: 2rem;
+    font-weight: 700;
+    color: var(--green-primary);
+  }
+  .stat-label { font-size: 12px; color: var(--text-muted); letter-spacing: 0.04em; text-transform: uppercase; margin-top: 4px; }
+
+  @keyframes fadeInUp {
+    from { opacity: 0; transform: translateY(24px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  /* ─── Section Common ─── */
+  section {
+    position: relative;
+    z-index: 1;
+    padding: 6rem 2rem;
+  }
+  .section-inner { max-width: 1200px; margin: 0 auto; }
+  .section-label {
+    font-size: 12px;
+    font-weight: 700;
+    color: var(--green-primary);
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    margin-bottom: 0.75rem;
+  }
+  .section-title {
+    font-family: var(--font-display);
+    font-size: clamp(1.8rem, 3.5vw, 2.4rem);
+    font-weight: 700;
+    line-height: 1.2;
+    margin-bottom: 1rem;
+  }
+  .section-desc {
+    font-size: 1.05rem;
+    color: var(--text-secondary);
+    max-width: 650px;
+    line-height: 1.7;
+    margin-bottom: 3rem;
+  }
+
+  /* ─── Methodology Grid ─── */
+  .method-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1.25rem;
+  }
+  .method-card {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 1.75rem;
+    transition: all 0.35s;
+    cursor: default;
+    position: relative;
+    overflow: hidden;
+  }
+  .method-card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 3px;
+    background: var(--green-primary);
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform 0.4s;
+  }
+  .method-card:hover { background: var(--bg-card-hover); border-color: var(--border-accent); transform: translateY(-4px); }
+  .method-card:hover::before { transform: scaleX(1); }
+  .method-num {
+    font-family: var(--font-display);
+    font-size: 32px;
+    font-weight: 700;
+    color: var(--green-primary);
+    opacity: 0.3;
+    line-height: 1;
+    margin-bottom: 0.75rem;
+  }
+  .method-card:hover .method-num { opacity: 0.7; }
+  .method-title {
+    font-family: var(--font-display);
+    font-size: 16px;
+    font-weight: 700;
+    color: var(--text-primary);
+    margin-bottom: 0.5rem;
+  }
+  .method-desc {
+    font-size: 13.5px;
+    color: var(--text-secondary);
+    line-height: 1.65;
+  }
+  .method-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+    margin-top: 1rem;
+  }
+  .method-tag {
+    font-size: 11px;
+    font-weight: 600;
+    color: var(--text-muted);
+    background: rgba(148,163,184,0.08);
+    padding: 3px 10px;
+    border-radius: 100px;
+  }
+
+  /* ─── Skills Section ─── */
+  .skills-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1.25rem;
+  }
+  .skill-card {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 2rem;
+    display: flex;
+    gap: 1.25rem;
+    transition: all 0.3s;
+  }
+  .skill-card:hover { border-color: var(--border-accent); transform: translateY(-2px); }
+  .skill-icon {
+    flex-shrink: 0;
+    width: 48px;
+    height: 48px;
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 22px;
+  }
+  .skill-icon.green { background: var(--green-glow); }
+  .skill-icon.amber { background: var(--amber-glow); }
+  .skill-icon.blue { background: var(--blue-glow); }
+  .skill-title {
+    font-family: var(--font-display);
+    font-size: 15px;
+    font-weight: 700;
+    margin-bottom: 0.4rem;
+  }
+  .skill-desc { font-size: 13.5px; color: var(--text-secondary); line-height: 1.6; }
+
+  /* ─── Output Format ─── */
+  .output-section { background: rgba(16,185,129,0.03); border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); }
+  .output-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 1rem;
+  }
+  .output-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 1rem;
+    padding: 1.25rem;
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    transition: all 0.25s;
+  }
+  .output-item:hover { border-color: var(--border-accent); }
+  .output-num {
+    flex-shrink: 0;
+    width: 36px;
+    height: 36px;
+    border-radius: 10px;
+    background: var(--green-glow);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: var(--font-display);
+    font-size: 14px;
+    font-weight: 700;
+    color: var(--green-primary);
+  }
+  .output-label {
+    font-size: 14px;
+    font-weight: 700;
+    color: var(--text-primary);
+    margin-bottom: 2px;
+  }
+  .output-detail { font-size: 12.5px; color: var(--text-muted); }
+
+  /* ─── About ─── */
+  .about-layout {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 3rem;
+    align-items: start;
+  }
+  .about-highlights {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+  }
+  .highlight {
+    display: flex;
+    align-items: flex-start;
+    gap: 1rem;
+    padding: 1.25rem;
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+  }
+  .highlight-icon {
+    flex-shrink: 0;
+    width: 40px;
+    height: 40px;
+    border-radius: 10px;
+    background: var(--green-glow);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 18px;
+  }
+  .highlight-title { font-size: 14px; font-weight: 700; margin-bottom: 2px; }
+  .highlight-desc { font-size: 13px; color: var(--text-secondary); }
+
+  /* ─── CTA Footer ─── */
+  .cta-section {
+    text-align: center;
+    padding: 6rem 2rem 4rem;
+    position: relative;
+  }
+  .cta-section::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 50%;
+    transform: translateX(-50%);
+    width: 500px; height: 500px;
+    background: radial-gradient(circle, rgba(16,185,129,0.06), transparent 70%);
+    pointer-events: none;
+  }
+  .cta-title {
+    font-family: var(--font-display);
+    font-size: clamp(1.8rem, 3vw, 2.4rem);
+    font-weight: 700;
+    margin-bottom: 1rem;
+  }
+  .cta-desc {
+    font-size: 1.05rem;
+    color: var(--text-secondary);
+    max-width: 550px;
+    margin: 0 auto 2rem;
+  }
+
+  /* ─── Footer ─── */
+  footer {
+    position: relative;
+    z-index: 1;
+    text-align: center;
+    padding: 2rem;
+    border-top: 1px solid var(--border);
+    font-size: 13px;
+    color: var(--text-muted);
+  }
+  footer a { color: var(--green-primary); text-decoration: none; }
+
+  /* ─── Scroll Reveal ─── */
+  .reveal {
+    opacity: 0;
+    transform: translateY(30px);
+    transition: opacity 0.7s ease, transform 0.7s ease;
+  }
+  .reveal.visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  /* ─── Mobile ─── */
+  @media (max-width: 900px) {
+    .method-grid { grid-template-columns: repeat(2, 1fr); }
+    .skills-grid { grid-template-columns: 1fr; }
+    .about-layout { grid-template-columns: 1fr; }
+    .hero-stats { gap: 2rem; }
+  }
+  @media (max-width: 640px) {
+    .method-grid { grid-template-columns: 1fr; }
+    .nav-links { display: none; }
+    .hamburger { display: block; }
+    .nav-links.open {
+      display: flex;
+      flex-direction: column;
+      position: absolute;
+      top: 64px;
+      left: 0;
+      right: 0;
+      background: rgba(11,15,26,0.95);
+      backdrop-filter: blur(20px);
+      padding: 1.5rem 2rem;
+      gap: 1.25rem;
+      border-bottom: 1px solid var(--border);
+    }
+    .hero-stats { flex-direction: column; gap: 1.5rem; }
+    section { padding: 4rem 1.25rem; }
+  }
+</style>
+</head>
+<body>
+
+<div class="glow-orb g1"></div>
+<div class="glow-orb g2"></div>
+<div class="glow-orb g3"></div>
+
+<!-- Nav -->
+<nav>
+  <div class="nav-inner">
+    <a href="#" class="nav-logo">SCB <span>by Rohit Rohinkarr</span></a>
+    <div class="nav-links" id="navLinks">
+      <a href="#methodology">Methodology</a>
+      <a href="#skills">Capabilities</a>
+      <a href="#output">Deliverables</a>
+      <a href="#about">About</a>
+      <a href="#contact" class="nav-cta">Book a Call</a>
+    </div>
+    <button class="hamburger" onclick="document.getElementById('navLinks').classList.toggle('open')" aria-label="Menu">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+</nav>
+
+<!-- Hero -->
+<section class="hero">
+  <div class="hero-content">
+    <div class="hero-badge"><span class="pulse"></span> Growth Architecture for SaaS</div>
+    <h1>Right product.<br><em>Wrong growth architecture.</em></h1>
+    <p class="hero-sub">A 9-step diagnostic methodology that finds the single highest-leverage bottleneck in your SaaS business and turns it into a compounding growth engine.</p>
+    <div class="hero-ctas">
+      <a href="#methodology" class="btn btn-primary">Explore the Methodology &#8595;</a>
+      <a href="#contact" class="btn btn-outline">Book a Diagnostic Session</a>
+    </div>
+    <div class="hero-stats">
+      <div class="stat"><div class="stat-num">13+</div><div class="stat-label">Years Experience</div></div>
+      <div class="stat"><div class="stat-num">9</div><div class="stat-label">Step Framework</div></div>
+      <div class="stat"><div class="stat-num">10</div><div class="stat-label">Core Capabilities</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- Methodology -->
+<section id="methodology">
+  <div class="section-inner">
+    <div class="section-label reveal">The Methodology</div>
+    <h2 class="section-title reveal">9 Steps from Diagnosis to Scale</h2>
+    <p class="section-desc reveal">Every SaaS company has one dominant constraint holding it back. This framework systematically finds it, designs the fix, and builds the engine that compounds.</p>
+
+    <div class="method-grid">
+      <div class="method-card reveal">
+        <div class="method-num">01</div>
+        <div class="method-title">Context Mapping</div>
+        <div class="method-desc">Map company stage, revenue motion, ICP maturity, capital pressure, competitive density, and organisational execution capacity before suggesting any action.</div>
+        <div class="method-tags"><span class="method-tag">Stage Analysis</span><span class="method-tag">ICP Maturity</span><span class="method-tag">Capital Pressure</span></div>
+      </div>
+      <div class="method-card reveal">
+        <div class="method-num">02</div>
+        <div class="method-title">Dominant Constraint Diagnosis</div>
+        <div class="method-desc">Decompose the business into demand generation, conversion efficiency, value delivery, retention depth, monetization capture, and scalability. Find the single highest-leverage bottleneck.</div>
+        <div class="method-tags"><span class="method-tag">Bottleneck ID</span><span class="method-tag">Cascading Impact</span></div>
+      </div>
+      <div class="method-card reveal">
+        <div class="method-num">03</div>
+        <div class="method-title">Revenue Architecture Design</div>
+        <div class="method-desc">Map acquisition engines, activation triggers, pricing mechanics, expansion pathways, and retention loops as one interconnected system. Design compounding flywheels.</div>
+        <div class="method-tags"><span class="method-tag">Flywheel Design</span><span class="method-tag">CAC Efficiency</span></div>
+      </div>
+      <div class="method-card reveal">
+        <div class="method-num">04</div>
+        <div class="method-title">Unit Economics Governance</div>
+        <div class="method-desc">Evaluate CAC realism, LTV expansion headroom, margin sustainability, discount dependency risk, and burn productivity across conservative, moderate, and aggressive scenarios.</div>
+        <div class="method-tags"><span class="method-tag">LTV/CAC</span><span class="method-tag">Burn Rate</span><span class="method-tag">Scenario Planning</span></div>
+      </div>
+      <div class="method-card reveal">
+        <div class="method-num">05</div>
+        <div class="method-title">Adoption Behaviour Analysis</div>
+        <div class="method-desc">Diagnose trust barriers, cognitive load, onboarding friction, and perceived ROI clarity. Design behavioural nudges and usage reinforcement loops.</div>
+        <div class="method-tags"><span class="method-tag">Onboarding UX</span><span class="method-tag">Aha Moment</span></div>
+      </div>
+      <div class="method-card reveal">
+        <div class="method-num">06</div>
+        <div class="method-title">Competitive Moat Strategy</div>
+        <div class="method-desc">Assess defensibility across network effects, data advantage, switching costs, distribution control, and brand perception asymmetry. Build structural moats.</div>
+        <div class="method-tags"><span class="method-tag">Network Effects</span><span class="method-tag">Switching Costs</span></div>
+      </div>
+      <div class="method-card reveal">
+        <div class="method-num">07</div>
+        <div class="method-title">India Market Alignment</div>
+        <div class="method-desc">Adapt strategies for price sensitivity, fragmented demand, hybrid sales motion, assisted onboarding needs, and credibility-driven buying behaviour.</div>
+        <div class="method-tags"><span class="method-tag">India GTM</span><span class="method-tag">Hybrid Sales</span></div>
+      </div>
+      <div class="method-card reveal">
+        <div class="method-num">08</div>
+        <div class="method-title">Platform Optionality Logic</div>
+        <div class="method-desc">Identify core capability that can evolve into ecosystem infrastructure. Phase from product utility to solution suite to platform leverage.</div>
+        <div class="method-tags"><span class="method-tag">Platform Play</span><span class="method-tag">Ecosystem</span></div>
+      </div>
+      <div class="method-card reveal">
+        <div class="method-num">09</div>
+        <div class="method-title">Governance & Risk Compliance</div>
+        <div class="method-desc">Validate all recommendations against execution bandwidth, capital constraints, and premature scaling risk. Emphasise disciplined experimentation and measurable milestones.</div>
+        <div class="method-tags"><span class="method-tag">Risk Gates</span><span class="method-tag">Validation Milestones</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Skills -->
+<section id="skills" style="background: rgba(17,24,39,0.5);">
+  <div class="section-inner">
+    <div class="section-label reveal">Core Capabilities</div>
+    <h2 class="section-title reveal">10 Consulting Skill Engines</h2>
+    <p class="section-desc reveal">Each capability is a standalone consulting module that integrates into the 9-step methodology to produce execution-ready outcomes.</p>
+
+    <div class="skills-grid">
+      <div class="skill-card reveal">
+        <div class="skill-icon green">&#9881;</div>
+        <div>
+          <div class="skill-title">SaaS Growth System Architect</div>
+          <div class="skill-desc">Design scalable growth engines by diagnosing funnel constraints, identifying compounding loops, and building revenue acceleration strategies.</div>
+        </div>
+      </div>
+      <div class="skill-card reveal">
+        <div class="skill-icon amber">&#128200;</div>
+        <div>
+          <div class="skill-title">Revenue Architecture Engineer</div>
+          <div class="skill-desc">Integrate pricing strategy, distribution mechanics, and product usage loops into multi-layered revenue systems that compound.</div>
+        </div>
+      </div>
+      <div class="skill-card reveal">
+        <div class="skill-icon blue">&#127919;</div>
+        <div>
+          <div class="skill-title">Product-Market Fit Diagnostic</div>
+          <div class="skill-desc">Rapidly identify if stagnation stems from weak demand, poor activation, unclear positioning, or misaligned ICP targeting.</div>
+        </div>
+      </div>
+      <div class="skill-card reveal">
+        <div class="skill-icon green">&#128176;</div>
+        <div>
+          <div class="skill-title">Unit Economics Engine</div>
+          <div class="skill-desc">Evaluate CAC efficiency, LTV expansion, and margin structures to design profitable monetization systems.</div>
+        </div>
+      </div>
+      <div class="skill-card reveal">
+        <div class="skill-icon amber">&#127757;</div>
+        <div>
+          <div class="skill-title">India GTM Strategy Designer</div>
+          <div class="skill-desc">Build India-first go-to-market strategies factoring trust barriers, price sensitivity, and hybrid sales realities.</div>
+        </div>
+      </div>
+      <div class="skill-card reveal">
+        <div class="skill-icon blue">&#128737;</div>
+        <div>
+          <div class="skill-title">Competitive Moat Simulator</div>
+          <div class="skill-desc">Evaluate long-term defensibility across network effects, switching costs, data advantage, and brand perception asymmetry.</div>
+        </div>
+      </div>
+      <div class="skill-card reveal">
+        <div class="skill-icon green">&#128214;</div>
+        <div>
+          <div class="skill-title">Category Narrative Builder</div>
+          <div class="skill-desc">Craft differentiated market positioning and authority narratives that command pricing power and attract ideal customers.</div>
+        </div>
+      </div>
+      <div class="skill-card reveal">
+        <div class="skill-icon amber">&#128172;</div>
+        <div>
+          <div class="skill-title">Founder Narrative Designer</div>
+          <div class="skill-desc">Reposition founders from operators to category thinkers, improving investor confidence and talent attraction.</div>
+        </div>
+      </div>
+      <div class="skill-card reveal">
+        <div class="skill-icon blue">&#9889;</div>
+        <div>
+          <div class="skill-title">Founder Execution Optimiser</div>
+          <div class="skill-desc">Redesign founder focus areas, hiring priorities, and operational systems to reduce chaos and accelerate measurable outcomes.</div>
+        </div>
+      </div>
+      <div class="skill-card reveal">
+        <div class="skill-icon green">&#128202;</div>
+        <div>
+          <div class="skill-title">Strategic Consulting Brain</div>
+          <div class="skill-desc">The master orchestration layer that ties all 9 capabilities together into a single diagnostic and execution system.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Output Format -->
+<section id="output" class="output-section">
+  <div class="section-inner">
+    <div class="section-label reveal">What You Get</div>
+    <h2 class="section-title reveal">Every Engagement Delivers</h2>
+    <p class="section-desc reveal">Not slides. Not decks. Execution-ready strategic outputs with clear metrics and accountability built in.</p>
+
+    <div class="output-grid">
+      <div class="output-item reveal">
+        <div class="output-num">1</div>
+        <div><div class="output-label">Executive Diagnosis</div><div class="output-detail">Clear, one-page summary of where the business stands today and why</div></div>
+      </div>
+      <div class="output-item reveal">
+        <div class="output-num">2</div>
+        <div><div class="output-label">Dominant Constraint</div><div class="output-detail">The single highest-leverage bottleneck with cascading impact analysis</div></div>
+      </div>
+      <div class="output-item reveal">
+        <div class="output-num">3</div>
+        <div><div class="output-label">Strategic Options</div><div class="output-detail">3 distinct paths forward with different risk/reward profiles</div></div>
+      </div>
+      <div class="output-item reveal">
+        <div class="output-num">4</div>
+        <div><div class="output-label">Tradeoffs & Risks</div><div class="output-detail">Honest assessment of what you gain and what you sacrifice with each path</div></div>
+      </div>
+      <div class="output-item reveal">
+        <div class="output-num">5</div>
+        <div><div class="output-label">Recommended Path</div><div class="output-detail">One clear recommendation with conviction, rationale, and assumptions</div></div>
+      </div>
+      <div class="output-item reveal">
+        <div class="output-num">6</div>
+        <div><div class="output-label">Execution Steps</div><div class="output-detail">Week-by-week implementation plan with owners and milestones</div></div>
+      </div>
+      <div class="output-item reveal">
+        <div class="output-num">7</div>
+        <div><div class="output-label">Success Metrics</div><div class="output-detail">Leading and lagging indicators to track progress and validate outcomes</div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- About -->
+<section id="about">
+  <div class="section-inner">
+    <div class="about-layout">
+      <div>
+        <div class="section-label reveal">About</div>
+        <h2 class="section-title reveal">Built by an Operator, Not a Theorist</h2>
+        <p class="section-desc reveal" style="margin-bottom:1.5rem;">13+ years at the intersection of product, growth, and business strategy. Co-founder, SaaS operator, enterprise seller. Every framework here comes from real revenue, real failures, and real scale.</p>
+        <p class="section-desc reveal" style="margin-bottom:0;">India-first execution. Global scalability. No generic playbooks. Only what works when capital is limited, competition is dense, and the clock is ticking.</p>
+      </div>
+      <div class="about-highlights">
+        <div class="highlight reveal">
+          <div class="highlight-icon">&#127891;</div>
+          <div><div class="highlight-title">MBA, Indian School of Business</div><div class="highlight-desc">Strategic thinking with execution discipline</div></div>
+        </div>
+        <div class="highlight reveal">
+          <div class="highlight-icon">&#128640;</div>
+          <div><div class="highlight-title">Co-Founder, B2B SaaS Platform</div><div class="highlight-desc">Built from zero to product-market fit</div></div>
+        </div>
+        <div class="highlight reveal">
+          <div class="highlight-icon">&#128200;</div>
+          <div><div class="highlight-title">7x Revenue Growth Track Record</div><div class="highlight-desc">Proven enterprise sales execution at scale</div></div>
+        </div>
+        <div class="highlight reveal">
+          <div class="highlight-icon">&#127758;</div>
+          <div><div class="highlight-title">Enterprise Relationships</div><div class="highlight-desc">Closed deals with Reliance, HUL, Tata, Cipla, and more</div></div>
+        </div>
+        <div class="highlight reveal">
+          <div class="highlight-icon">&#127919;</div>
+          <div><div class="highlight-title">ICP: Seed to Pre-Series A SaaS</div><div class="highlight-desc">Focused on early-stage and growth-stage companies</div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA -->
+<section id="contact" class="cta-section">
+  <div class="section-inner" style="position:relative; z-index:1;">
+    <div class="section-label reveal">Ready to Fix Your Growth Architecture?</div>
+    <h2 class="cta-title reveal">One conversation could change<br>your next 12 months.</h2>
+    <p class="cta-desc reveal">Book a free 30-minute diagnostic call. I will identify your dominant constraint and show you the highest-leverage move you can make this quarter.</p>
+    <div class="hero-ctas reveal">
+      <a href="https://www.linkedin.com/in/rohitrohinkarr/" target="_blank" class="btn btn-primary">Connect on LinkedIn</a>
+      <a href="mailto:rohit@example.com" class="btn btn-outline">Send an Email</a>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <p>&copy; 2026 Rohit Rohinkarr. Strategic Consulting Brain. All rights reserved.</p>
+  <p style="margin-top:6px;"><a href="https://www.linkedin.com/in/rohitrohinkarr/" target="_blank">LinkedIn</a></p>
+</footer>
+
+<script>
+  // Scroll reveal
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('visible');
+      }
+    });
+  }, { threshold: 0.1, rootMargin: '0px 0px -40px 0px' });
+
+  document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+
+  // Smooth scroll for anchor links
+  document.querySelectorAll('a[href^="#"]').forEach(a => {
+    a.addEventListener('click', e => {
+      e.preventDefault();
+      const target = document.querySelector(a.getAttribute('href'));
+      if (target) target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      document.getElementById('navLinks').classList.remove('open');
+    });
+  });
+</script>
+
+</body>
+</html>
